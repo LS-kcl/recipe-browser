@@ -42,7 +42,8 @@ export default function App() {
     ]
 
     // Filter all "zero" items and return
-    return newArr.filter((item) => item.ing !== "");
+    return newArr.filter((item) => item.ing !== "")
+                 .filter((item) => item.ing !== null);
     
   }
 
@@ -78,6 +79,7 @@ export default function App() {
   return (
     <div className="App">
       <div id="sidepadding">
+        {recipes.length === 0 ||
         <RecipeNavbar
           isPrevPage={isPrevPage}
           isNextPage={isNextPage}
@@ -85,6 +87,7 @@ export default function App() {
           nextPage={nextPage}
           getRecipe={getRecipe}
         />
+        }
         {recipes.length !== 0 || <LandingPage getRecipe={getRecipe}/>}
         {curPage == null || <RecipeView recipe={curPage} formattedIngredients={ingredientReformatter(curPage)}/>}
       </div>
