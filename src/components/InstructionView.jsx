@@ -1,7 +1,11 @@
 export default function InstructionView({ instructions }) {
   return (
-    instructions.map((instruction) => {
-      return <p>{instruction}</p>;
-    })
+    <div className="instructions-text">
+      {
+      instructions.map((instruction) => {
+        return <p>{instruction}</p>;
+      })
+      }
+    </div>
   )
 }
