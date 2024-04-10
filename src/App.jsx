@@ -8,12 +8,20 @@ export default function App() {
   // We must ensure recipes are unique as we are generating random recipes
   const [recipeIDs, setRecipeIDs] = useState(new Set());
   const [recipes, setRecipes] = useState([]);
+  const [prevNumOfRecipes, setPrevNumOfRecipes] = useState(0)
   const [curPageIndex, setCurPageIndex] = useState(0);
 
   // Simple variable for our current page
   let curPage = recipes.length !== 0 ? recipes[curPageIndex] : null;
   let isNextPage = curPageIndex + 1 < recipes.length;
   let isPrevPage = curPageIndex - 1 >= 0;
+  
+  // If we have update the page with a new recipe, go to latest page
+  if (prevNumOfRecipes < recipes.length) {
+    setCurPageIndex(recipes.length-1);
+    setPrevNumOfRecipes(recipes.length);
+  }
+
 
   function ingredientReformatter(badRecipeFormat) {
     // Take in badly formatted recipe
