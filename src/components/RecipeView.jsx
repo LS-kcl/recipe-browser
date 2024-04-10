@@ -1,4 +1,4 @@
-import IngredientView from './IngredientView.jsx'
+import IngredientsView from './IngredientsView.jsx'
 
 export default function RecipeView({ recipe, formattedIngredients }) {
   function instructionSplitter(insString) {
@@ -8,24 +8,22 @@ export default function RecipeView({ recipe, formattedIngredients }) {
 
   return(
       <div className="centre">
-          <p>{recipe.idMeal}</p>
-          <p>{recipe.strMeal}</p>
-          <img src={recipe.strMealThumb} alt={recipe.strMeal} />
-          {
-            formattedIngredients.map((ing) => {
-              return (
-                <IngredientView
-                  ingredient={ing.ing}
-                  amount={ing.amt}
-                />
-              );
-            })
-          }
+        <div className="wrapper page">
+          <div className="right">
+            <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+            <h2>{recipe.strMeal}</h2>
+          </div>
+          <div className="left">
+            <IngredientsView ingredients={formattedIngredients}/>
+          </div>
+        </div>
+        <div className="page">
           {
             instructionSplitter(recipe.strInstructions).map((item) => {
                 return <p>{item}</p>;
             })
           }
+        </div>
       </div>
   );
 }

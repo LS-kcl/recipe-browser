@@ -18,7 +18,6 @@ export default function App() {
   function ingredientReformatter(badRecipeFormat) {
     // Take in badly formatted recipe
     // Iterate through and add to array
-
     let newArr = [
       {ing: badRecipeFormat.strIngredient1, amt: badRecipeFormat.strMeasure1},
       {ing: badRecipeFormat.strIngredient2, amt: badRecipeFormat.strMeasure2},
