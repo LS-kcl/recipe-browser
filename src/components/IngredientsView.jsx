@@ -1,13 +1,22 @@
 export default function IngredientsView({ ingredients }) {
+  function getImageID(ingredientName) {
+    const base = "https://www.themealdb.com/images/ingredients/"
+    const ingredient = ingredientName;
+    const end = ".png"
+    return base + ingredient + end;
+  }
   return (
-    <ul>
+    <div className="grid-container">
     {
       ingredients.map((ing) => {
           return (
-            <li>{ing.ing}: {ing.amt}</li>
+            <div>
+              <img src={getImageID(ing.ing)} alt="whiteflour"/>
+              <p>{ing.ing}: {ing.amt}</p>
+            </div>
           );
         })
     }
-    </ul>
+    </div>
   )
 }

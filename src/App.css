@@ -75,6 +75,13 @@ body {
   align-items: center;
 }
 
+.grid-container {
+   display: grid;
+   /* grid-auto-columns: minmax(0, 4fr); */
+   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+   align-content: center;
+}
+
 .page {
   font-family: Inter;
   border-radius: 0.5em;
