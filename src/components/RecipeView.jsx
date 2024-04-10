@@ -1,10 +1,8 @@
 import IngredientsView from './IngredientsView.jsx'
+import InstructionsView from './InstructionsView.jsx'
+
 
 export default function RecipeView({ recipe, formattedIngredients }) {
-  function instructionSplitter(insString) {
-    // Return an array of objects (steps) to be displayed separately
-    return insString.split('\n');
-  }
 
   return(
       <div className="centre">
@@ -18,11 +16,7 @@ export default function RecipeView({ recipe, formattedIngredients }) {
           </div>
         </div>
         <div className="page">
-          {
-            instructionSplitter(recipe.strInstructions).map((item) => {
-                return <p>{item}</p>;
-            })
-          }
+          <InstructionsView instructions={recipe.strInstructions} />
         </div>
       </div>
   );

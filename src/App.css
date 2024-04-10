@@ -56,16 +56,6 @@ body {
    align-content: center;
 }
 
-.instructions-text p{
-  display: inline-block;
-  text-align: left;
-  align-content: left;
-}
-
-button {
-  padding: 5em;
-  font-family: arial;
-}
 
 .page {
   font-family: Inter;
@@ -80,30 +70,17 @@ button {
   padding: 1em;
 }
 
-
-
-.page-box {
-  padding: 1.5em;
+/* Explore why this doesn't work*/
+.instructions-text{
+  text-align: left;
+  align-content: left;
 }
 
-.page h3 {
-  color: #6f2a2a;
-}
-
-.header-title {
-  text-transform: uppercase;
-}
-
-.header-text {
-  font-weight: bold;
-}
-
-.body-text {
-  font-size: 0.9em;
-}
-
-.footer-text {
-  font-size: 0.75em;
+.button {
+  padding-left: 2em;
+  padding-right: 2em;
+  font-size: 1em;
+  font-family: arial;
 }
 
 /* Split column styling */

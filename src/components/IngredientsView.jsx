@@ -11,7 +11,7 @@ export default function IngredientsView({ ingredients }) {
       ingredients.map((ing) => {
           return (
             <div>
-              <img src={getImageID(ing.ing)} alt="No image found"/>
+              <img src={getImageID(ing.ing)} alt={ing.ing}/>
               <p>{ing.ing}: {ing.amt}</p>
             </div>
           );
