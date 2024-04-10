@@ -6,6 +6,7 @@ export default function InstructionsView({ instructions }) {
 
   return (
     <div className="instructions-text">
+    <h2>Instructions:</h2>
       {
       instructionSplitter(instructions).map((instruction) => {
         return <p>{instruction}</p>;
