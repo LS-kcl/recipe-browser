@@ -1,24 +1,96 @@
 import { useState } from 'react'
-import logo from './logo.svg';
 import './App.css';
 
-
 export default function App() {
+  // We must ensure recipes are unique as we are generating random recipes
+  const [recipeIDs, setRecipeIDs] = useState(new Set());
+  const [recipes, setRecipes] = useState([]);
+
+  function ingredientReformatter(badRecipeFormat) {
+    // Take in badly formatted recipe
+    // Iterate through and add to array
+
+    let newArr = [
+      {ing: badRecipeFormat.strIngredient1, amt: badRecipeFormat.strMeasure1},
+      {ing: badRecipeFormat.strIngredient2, amt: badRecipeFormat.strMeasure2},
+      {ing: badRecipeFormat.strIngredient3, amt: badRecipeFormat.strMeasure3},
+      {ing: badRecipeFormat.strIngredient4, amt: badRecipeFormat.strMeasure4},
+      {ing: badRecipeFormat.strIngredient5, amt: badRecipeFormat.strMeasure5},
+      {ing: badRecipeFormat.strIngredient6, amt: badRecipeFormat.strMeasure6},
+      {ing: badRecipeFormat.strIngredient7, amt: badRecipeFormat.strMeasure7},
+      {ing: badRecipeFormat.strIngredient8, amt: badRecipeFormat.strMeasure8},
+      {ing: badRecipeFormat.strIngredient9, amt: badRecipeFormat.strMeasure9},
+      {ing: badRecipeFormat.strIngredient10, amt: badRecipeFormat.strMeasure10},
+      {ing: badRecipeFormat.strIngredient11, amt: badRecipeFormat.strMeasure11},
+      {ing: badRecipeFormat.strIngredient12, amt: badRecipeFormat.strMeasure12},
+      {ing: badRecipeFormat.strIngredient13, amt: badRecipeFormat.strMeasure13},
+      {ing: badRecipeFormat.strIngredient14, amt: badRecipeFormat.strMeasure14},
+      {ing: badRecipeFormat.strIngredient15, amt: badRecipeFormat.strMeasure15},
+      {ing: badRecipeFormat.strIngredient16, amt: badRecipeFormat.strMeasure16},
+      {ing: badRecipeFormat.strIngredient17, amt: badRecipeFormat.strMeasure17},
+      {ing: badRecipeFormat.strIngredient18, amt: badRecipeFormat.strMeasure18},
+      {ing: badRecipeFormat.strIngredient19, amt: badRecipeFormat.strMeasure19},
+      {ing: badRecipeFormat.strIngredient20, amt: badRecipeFormat.strMeasure20},
+    ]
+
+    // Filter all "zero" items and return
+    return newArr.filter((item) => item.ing !== "");
+    
+  }
+
+  function getRecipe() {
+    const url = 'https://www.themealdb.com/api/json/v1/1/random.php'
+    fetch(url)
+      .then(response => response.json())
+      .then(wrappedData => wrappedData.meals[0])
+      .then(recipe => {
+        setRecipes([...recipes, recipe])
+      })
+      .then(recipe => {
+        const newSet = Set(recipeIDs).add(recipe.idMeal);
+        setRecipeIDs(newSet);
+      })
+      .catch(error => console.error(error));
+    // Make query to api
+    // Keep making queries until some recipeID not in recipeIDs is found
+    // Add this new recipe object to the recipes array
+    // Update the set of recipeIDs
+  }
+
   return (
     <div className="App">
       <div id="sidepadding">
-        <LandingPage/>
-        <Ingredients/>
-        <Steps/>
+        {
+          !recipes.length ? <LandingPage getRecipe={getRecipe}/> : null
+        }
+        {
+          recipes.map((recipe) => {
+            console.log(recipe);
+            return (
+              <>
+                <p>{recipe.idMeal}</p>
+                <p>{recipe.strMeal}</p>
+                <img src={recipe.strMealThumb} alt={recipe.strMeal} />
+                {
+                  ingredientReformatter(recipe).map((ing) => {
+                    return <p>{ing.ing}: {ing.amt}</p>;
+                  })
+                }
+                <p>{recipe.strInstructions}</p>
+              </>
+            );
+          })
+        }
       </div>
     </div>
   );
 }
 
-function LandingPage(){
+function LandingPage({ getRecipe }){
   
   return(
       <div className="centre">
+        <p>Generate your first recipe:</p><button onClick={() => getRecipe()}>Click me!</button>
         <h1>How to make a Roast Beef Dinner</h1>
         <em>By: Nicky Corbishley</em>
 
@@ -54,12 +126,6 @@ function LandingPage(){
 function Ingredients(){
   const [items, setItems] = useState([]);
   const [inputText, setInputText] = useState("");
-
-  function printShoppingList() {
-    items.map((item) => {
-      return <li>item</li>;
-    })
-  }
 
   const addToList = (event) => {
     event.preventDefault();
