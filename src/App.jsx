@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import './App.css';
+import RecipeView from './components/RecipeView.jsx'
+import RecipeNavbar from './components/RecipeNavbar.jsx'
+import LandingPage from './components/LandingPage.jsx'
 
 export default function App() {
   // We must ensure recipes are unique as we are generating random recipes
@@ -45,6 +48,10 @@ export default function App() {
   }
 
   async function getRecipe() {
+    // Make query to api
+    // Keep making queries until some recipeID not in recipeIDs is found
+    // Add this new recipe object to the recipes array
+    // Update the set of recipeIDs
     const url = 'https://www.themealdb.com/api/json/v1/1/random.php'
     fetch(url)
       .then(response => response.json())
@@ -57,10 +64,6 @@ export default function App() {
         setRecipeIDs(newSet);
       })
       .catch(error => console.error(error));
-    // Make query to api
-    // Keep making queries until some recipeID not in recipeIDs is found
-    // Add this new recipe object to the recipes array
-    // Update the set of recipeIDs
   }
 
   function nextPage() {
@@ -76,48 +79,17 @@ export default function App() {
   return (
     <div className="App">
       <div id="sidepadding">
-        <RecipeNavbar prevPage={prevPage} nextPage={nextPage} getRecipe={getRecipe} />
+        <RecipeNavbar
+          isPrevPage={isPrevPage}
+          isNextPage={isNextPage}
+          prevPage={prevPage}
+          nextPage={nextPage}
+          getRecipe={getRecipe}
+        />
         {recipes.length !== 0 || <LandingPage getRecipe={getRecipe}/>}
-        {curPage == null || <RecipeView recipe={curPage} ingredientReformatter={ingredientReformatter}/>}
+        {curPage == null || <RecipeView recipe={curPage} formattedIngredients={ingredientReformatter(curPage)}/>}
       </div>
     </div>
   );
 }
-
-function RecipeNavbar({ prevPage, nextPage, getRecipe }){
-  
-  return(
-      <div className="centre">
-        <button onClick={() => prevPage()}>Previous Recipe</button>
-        <button onClick={() => getRecipe()}>Generate new recipe</button>
-        <button onClick={() => nextPage()}>Next recipe</button>
-      </div>
-  );
-}
-
-function RecipeView({ recipe, ingredientReformatter }) {
-  return(
-      <div className="centre">
-          <p>{recipe.idMeal}</p>
-          <p>{recipe.strMeal}</p>
-          <img src={recipe.strMealThumb} alt={recipe.strMeal} />
-          {
-            ingredientReformatter(recipe).map((ing) => {
-              return <p>{ing.ing}: {ing.amt}</p>;
-            })
-          }
-          <p>{recipe.strInstructions}</p>
-      </div>
-  );
-}
-
-function LandingPage({ getRecipe }){
-  
-  return(
-      <div className="centre">
-        <h1>Generate your first recipe:</h1><button onClick={() => getRecipe()}>Click me!</button>
-      </div>
-  );
-}
-
 
